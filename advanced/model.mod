@@ -52,16 +52,16 @@ s.t. RowHasInterestProduct {r in Rows, g in ProductGroups, c in CustomerGroups}:
     GoToRow[c, r] >= buys[c,g] * GroupInRow[g,r];
 
 s.t. BuyWithProability1 {c in CustomerGroups, r in Rows}:
-    PlusIncome[c,r] >= sum{g in ProductGroups: buys[c,g] = 0} GroupInRow[g,r]*averagePrice[g]*probabilityToBuy[c] + M*(1-GoToRow[c,r]);
+    PlusIncome[c,r] <= sum{g in ProductGroups: buys[c,g] = 0} GroupInRow[g,r]*averagePrice[g]*probabilityToBuy[c] + M*(1-GoToRow[c,r]);
 
 s.t. BuyWithProability2 {c in CustomerGroups, r in Rows}:
     PlusIncome[c,r] >= sum{g in ProductGroups: buys[c,g] = 0} GroupInRow[g,r]*averagePrice[g]*probabilityToBuy[c] - M*(1-GoToRow[c,r]);
 
 s.t. IfRowHasCashierDoesntMatter1{c in CustomerGroups, r in Rows}:
-    PlusIncome[c,r] >= 0 + M*(1-CashierInRow[r]);
+    PlusIncome[c,r] <= 0 + M*(1-CashierInRow[r]);
 
 s.t. IfRowHasCashierDoesntMatter2{c in CustomerGroups, r in Rows}:
-    PlusIncome[c,r] <= 0 - M*(1-CashierInRow[r]);
+    PlusIncome[c,r] >= 0 - M*(1-CashierInRow[r]);
 
 maximize ManipulateIncome:
     sum{c in CustomerGroups, r in Rows} PlusIncome[c,r] * count[c];
