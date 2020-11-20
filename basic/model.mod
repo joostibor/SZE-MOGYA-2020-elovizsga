@@ -1,4 +1,4 @@
-param nRows; #Tervezett sorok száma
+param nRows;
 set Rows := 1..nRows;
 param cashierCount;
 param cashierLength;
